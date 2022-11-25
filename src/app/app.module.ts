@@ -3,14 +3,22 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { TodoWeekComponent } from './todo-week/todo-week.component';
+import { TodoWeekBoxesComponent } from './todo-week/todo-week-boxes/todo-week-boxes.component';
+import { TodoWeekModalComponent } from './todo-week/todo-week-modal/todo-week-modal.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TodoWeekComponent,
+    TodoWeekBoxesComponent,
+    TodoWeekModalComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

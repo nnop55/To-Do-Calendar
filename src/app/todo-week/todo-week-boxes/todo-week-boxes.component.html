@@ -1,0 +1,35 @@
+<div class="main">
+    <div class="text-center text-info">
+        <h1 style="font-size: 48px;">This Week</h1>
+    </div>
+
+    <div class="m-auto">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th *ngFor="let thItem of hoursData" scope="col" [class]="thItem.className">{{thItem.title}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let trItem of daysData" [class]="trItem.classNameTr">
+                    <th [class]="trItem.className">{{trItem.title}}</th>
+                    <ng-container *ngFor="let hrItem of hoursData; let i = index">
+                        <td *ngIf="i != 0" (click)="openDialog(trItem.title,hrItem.title)" (drop)="onDrop($event)"
+                            (dragover)="onDragOver($event)" [attr.day]="trItem.title" [attr.hour]="hrItem.title">
+                            <ng-container *ngFor="let item of dialog.todoData">
+                                <p *ngIf="item.days == trItem.title && item.hours == hrItem.title"
+                                    [ngStyle]="{'background':item.selectStatusColor}" draggable="true"
+                                    (dragstart)="onDragStart($event)" (dragover)="onDragOver($event)"
+                                    (dragend)="onDragEnd($event,item)">
+                                    {{item.todo.substring(0,5)}}
+                                </p>
+                            </ng-container>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<app-todo-week-modal *ngIf="dialog.hideShowDialog" [todoFiller]="dialog"></app-todo-week-modal>

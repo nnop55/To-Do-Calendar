@@ -1,0 +1,30 @@
+<div class="modal fade" [ngClass]="{'showmodal': todoFiller.hideShowDialog}" id="exampleModal" tabindex="-1"
+    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="modalstyle" class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{todoFiller.days}}-{{todoFiller.hours}}</h5>
+            </div>
+            <div class="modal-body d-flex">
+                <input type="text" class="form-control w-75" placeholder="Enter ToDo" [(ngModel)]="todoItem.todo">
+                <div class="w-25">
+                    <select class=" form-select" [(ngModel)]="todoItem.selectStatusColor"
+                        [ngStyle]="{'background-color': todoItem.selectStatusColor}"
+                        aria-label="Default select example">
+                        <option *ngFor="let item of statusInfo" [value]="item.statusColor">
+                            {{item.selectStatus}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="closebtn" type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="closeDialog()">Close</button>
+                <button id="savebtn" type="button" class="btn btn-primary" (click)="saveChangeBtn()">Save
+                    ToDo-Week</button>
+                <button *ngIf="this.todoItem.days != undefined" type="button" class="btn btn-danger"
+                    (click)="deleteToDoBtn()">Delete </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { StatusInfo } from '../select-status.model';
-import { TodoFiller } from '../todo-modal-filler';
-import { TodoModelInfo } from '../todo-modal-model';
+import { StatusInfo } from '../models/select-status.model';
+import { TodoFiller } from '../models/todo-modal-filler';
+import { TodoModelInfo } from '../models/todo-modal-model';
 
 @Component({
   selector: 'app-todo-week-modal',
@@ -30,29 +30,42 @@ export class TodoWeekModalComponent implements OnInit {
   }
 
   saveChangeBtn() {
+
     if (this.todoItem.days != undefined) { //monacemebs anaxlebs masivshi
       this.todoFiller.todoData.forEach(item => {
         if (item.days == this.todoFiller.days && item.hours == this.todoFiller.hours) {
           this.todoItem.todo = item.todo;
           this.todoItem.selectStatusColor = item.selectStatusColor
+          this.setTodoToStorage(this.todoFiller.todoData);
         }
       })
     } else { //amatebs masivshi axal monacemebs
+
       this.todoItem.hours = this.todoFiller.hours;
       this.todoItem.days = this.todoFiller.days;
       this.todoFiller.todoData.push(this.todoItem);
+      console.log(this.todoItem)
+      this.setTodoToStorage(this.todoFiller.todoData);
     }
-    this.closeDialog()
+
+    this.closeDialog();
   }
+
 
   deleteToDoBtn() {  //shlis archeul monacems
     var index = this.todoFiller.todoData.indexOf(this.todoItem);
     this.todoFiller.todoData.splice(index, 1);
+    this.setTodoToStorage(this.todoFiller.todoData);
     this.closeDialog();
   }
 
   closeDialog() { //dialogis daxurva
     this.todoFiller.hideShowDialog = !this.todoFiller.hideShowDialog
+  }
+
+  setTodoToStorage(todo: any) {
+    localStorage.setItem('Todo', JSON.stringify(todo))
+
   }
 
 }

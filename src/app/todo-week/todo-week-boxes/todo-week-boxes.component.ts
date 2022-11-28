@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ScheduleDays } from '../todo-days.model';
-import { ScheduleHours } from '../todo-hours.model';
-import { TodoFiller } from '../todo-modal-filler';
-import { TodoModelInfo } from '../todo-modal-model';
+import { ScheduleDays } from '../models/todo-days.model';
+import { ScheduleHours } from '../models/todo-hours.model';
+import { TodoFiller } from '../models/todo-modal-filler';
+import { TodoModelInfo } from '../models/todo-modal-model';
 
 @Component({
   selector: 'app-todo-week-boxes',
@@ -48,6 +48,7 @@ export class TodoWeekBoxesComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.localFunc();
   }
 
   openDialog(days: string, hours: string) {  // ixsneba dialogi da gamosaxulia romel dgezec da saatzec daaklikeb
@@ -75,7 +76,7 @@ export class TodoWeekBoxesComponent implements OnInit {
     }
   }
 
-  onDragEnd(event: DragEvent, data: TodoModelInfo) { //masivshi inpormaciis ganaxleba - <P></P>
+  onDragEnd(event: DragEvent, data: TodoModelInfo) { //masivshi/localstorageshi inpormaciis ganaxleba - <P></P>
     let p = event.target as HTMLElement;
     let td = p.parentElement as HTMLElement;
 
@@ -84,6 +85,13 @@ export class TodoWeekBoxesComponent implements OnInit {
 
     data.hours = hour != null ? hour : data.hours;
     data.days = day != null ? day : data.days;
+
+    localStorage.setItem("Todo", JSON.stringify(this.dialog.todoData));
   }
 
+  localFunc() {
+    var tmp: any = localStorage.getItem("Todo");
+    tmp = tmp ? JSON.parse(tmp) : [];
+    this.dialog.todoData = tmp;
+  }
 }
